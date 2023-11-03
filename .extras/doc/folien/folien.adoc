@@ -1,0 +1,102 @@
+== Gliederung
+
+* Werkzeuge
+* Nest und GraphQL
+* Prisma
+* Security
+* Jest, ???
+
+== Werkzeuge
+
+* Infrastruktur
+* Entwicklungsumgebung
+* CI und Deployment
+* Dokumentation
+
+=== Infrastruktur
+
+* npm
+* node_modules
+* ts-node
+
+=== Entwicklungsumgebung
+
+* VS Code
+* TypeScript und ES _TODO:*Version*_
+* _TODO:ESLint und SonarQube_
+* _TODO:Prettier_
+* _TODO:GraphQL_
+
+=== CI und Deployment
+
+* _TODO:Dockerfile_
+* _TODO:Docker Compose_
+* _TODO:Continuous Integration (CI) durch eine Jenkins Pipeline_
+
+=== Dokumentation
+
+* _TODO: AsciiDoctor mit PlantUML_
+* _TODO:reveal.js_
+
+=== Decorator für die Controller-Klasse
+
+// * `@Controller()`
+// * `@UseGuards()`
+// * `@UseInterceptors()`
+
+=== Decorator für die Controller-Funktionen
+
+* `@Get()`, `@Post()`, `@Put()`, `@Delete()`
+* `@Param()`, `@Query()`
+* `@Req()`, `@Res()`, `@Body()`, `@Header()`
+* `@Roles()`
+
+== Nest und GraphQL
+
+* Wrapper für Apollo Server
+* Schema-Definition mit Typen, Query und Mutation
+* Resolver mit `@Resolver()`, `@Query()`, `@Mutation()`, `@Args()`
+* RESTclient
+
+== Prisma
+
+* OR-Mapping
+* Prisma Schema, ähnlich wie GraphQL
+* Entity-Klassen
+* _TODO Decorators: @Entity(),.._
+* Repository?
+* QueryBuilder?
+
+== Security
+
+* _TODO JWT_
+  - Private und Public Key
+  - Header
+  - Payload
+  - Signature
+* Guards durch Nest für RBAC?
+* Lokale Strategie für Passport?
+* Argon2?
+
+=== JWT
+
+* Header
+  - alg, z.B. RS256
+  - typ
+*  Payload
+  - iat (issued at)
+  - exp (expiration)
+  - iss (issuer)
+
+== Jest, Axios und Istanbul
+
+// * Jest
+// * ts-jest
+// * Axios
+// * Istanbul
+
+// == OpenAPI durch Swagger
+
+// * Wrapper durch Nest
+// * @Api...() einschl. `@ApiBearerAuth()`
+// * Button _Try it out_

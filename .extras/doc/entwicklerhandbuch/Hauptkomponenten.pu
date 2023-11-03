@@ -1,0 +1,140 @@
+@startuml Hauptkomponenten
+
+package "Benutzer- und Authentifizierungsmanagement" {
+  class User {
+    -id: int
+    -name: string
+    -email: string
+    -password: string
+    -permissions: string[]
+    +getUserInfo(): string
+    +updateUserInfo(): void
+  }
+  class Authentication {
+    +login(username: string, password: string): boolean
+    +logout(): void
+  }
+}
+
+package "Produkt- und Katalogverwaltung" {
+  class Product {
+    -id: int
+    -name: string
+    -description: string
+    -price: float
+    -availability: boolean
+    +getProductInfo(): string
+    +updateProductInfo(): void
+  }
+  class Category {
+    -id: int
+    -name: string
+    -products: Product[]
+    +getCategoryInfo(): string
+    +addProduct(): void
+  }
+  class Catalog {
+    -id: int
+    -products: Product[]
+    -categories: Category[]
+    +getCatalogInfo(): string
+    +addProduct(): void
+    +addCategory(): void
+  }
+}
+
+package "Bestellverwaltung" {
+  class Order {
+    -id: int
+    -orderItems: OrderItem[]
+    -totalPrice: float
+    -shippingAddress: string
+    +getOrderInfo(): string
+    +addOrderItem(): void
+    +calculateTotalPrice(): void
+  }
+  class OrderItem {
+    -id: int
+    -product: Product
+    -quantity: int
+    +getOrderItemInfo(): string
+  }
+}
+
+package "Zahlungsabwicklung" {
+  class Payment {
+    -id: int
+    -amount: float
+    -transactionDetails: string
+    +processPayment(): void
+  }
+  class Cart {
+    -items: Product[]
+    +addItemToCart(): void
+    +removeItemFromCart(): void
+    +checkout(): void
+  }
+}
+
+package "Datenbankzugriff" {
+  class Database {
+    +connect(): void
+    +executeQuery(sql: string): void
+  }
+}
+
+package "Sicherheit" {
+  class Security {
+    +authenticateUser(username: string, password: string): boolean
+    +authorizeUser(user: User, permission: string): boolean
+    +protectAgainstAttacks(): void
+  }
+}
+
+package "API-Verwaltung" {
+  class API {
+    +provideAPI(endpoint: string): void
+  }
+}
+
+package "Konfiguration und Einstellungen" {
+  class Configuration {
+    -databaseConnectionInfo: string
+    -otherParameters: string[]
+    +getDatabaseConnectionInfo(): string
+    +getOtherParameters(): string[]
+    +setDatabaseConnectionInfo(info: string): void
+    +setOtherParameters(parameters: string[]): void
+  }
+}
+
+package "Logger und Protokollierung" {
+  class Logger {
+    +logActivity(activity: string): void
+    +logError(error: string): void
+  }
+}
+
+package "E-Mail-Versand" {
+  class Email {
+    -sender: string
+    -recipient: string
+    -subject: string
+    -message: string
+    +sendEmail(): void
+  }
+}
+
+User --|> Authentication
+Product -- Category
+Product -- Catalog
+Order --|> OrderItem
+Cart --|> Product
+Security --|> Authentication
+Database -- Security
+API --|> Authentication
+Configuration --|> Database
+Logger --|> Security
+Email --|> Security
+
+@enduml

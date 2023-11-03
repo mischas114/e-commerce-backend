@@ -1,0 +1,2 @@
+sender,recipient,subject,message
+sender@example.com,recipient@example.com,Test Subject,This is a test email message.

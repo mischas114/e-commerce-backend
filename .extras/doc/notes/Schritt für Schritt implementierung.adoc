@@ -1,0 +1,47 @@
+== NestJS-Struktur:
+
+Zuerst sollten Sie sicherstellen, dass Sie eine solide NestJS-Struktur haben. Sie können dies erreichen, indem Sie die CLI verwenden, um Module und Controller zu erstellen, die Ihre Anforderungen widerspiegeln.
+
+== GraphQL-Schema:
+
+Erstellen Sie ein GraphQL-Schema, das die verschiedenen Abteilungen Ihres E-Commerce-Backends repräsentiert. Dazu gehören z.B. User, Product, Order, Payment, etc.
+
+== Resolver:
+
+Erstellen Sie Resolver-Klassen für jedes GraphQL-Schema. Resolver sind für die Anfragen und Mutationen verantwortlich, die auf Ihre Daten zugreifen. Zum Beispiel könnten Sie einen UserResolver, einen ProductResolver usw. erstellen.
+
+== Datenbank-Modelle:
+
+Erstellen Sie Datenbankmodelle für Ihre PostgreSQL-Datenbank, die den verschiedenen Abteilungen entsprechen. Sie könnten Klassen wie UserEntity, ProductEntity, OrderEntity, PaymentEntity erstellen.
+
+== Service-Schicht:
+
+Erstellen Sie Service-Klassen für jedes Datenbankmodell. Diese Klassen enthalten die Geschäftslogik und sind dafür verantwortlich, Datenbankabfragen durchzuführen.
+
+== Verbindung zur Datenbank:
+
+Richten Sie die Verbindung zur PostgreSQL-Datenbank ein. Dies kann mit Modulen wie TypeORM oder Sequelize erreicht werden.
+
+== Schema-Resolvers-Mapping:
+
+Erstellen Sie ein Mapping zwischen Ihren GraphQL-Schemata und den zugehörigen Resolvers und Services. Dies kann in einer Datei wie app.module.ts geschehen.
+
+== Berechtigungen und Authentifizierung:
+
+Implementieren Sie Berechtigungsprüfungen und Authentifizierung, um sicherzustellen, dass Benutzer nur auf die Daten und Funktionen zugreifen können, für die sie autorisiert sind.
+
+== Testen:
+
+Schreiben Sie Tests für Ihre Resolver, Services und Modelle, um sicherzustellen, dass alles wie erwartet funktioniert.
+
+== Dokumentation:
+
+Erstellen Sie eine Dokumentation für Ihre GraphQL-API, damit Entwickler, die Ihre API verwenden, wissen, wie sie sie verwenden können.
+
+== Optimierung und Skalierung:
+
+Denken Sie an die Leistung und Skalierbarkeit. PostgreSQL ist ein leistungsfähiges Datenbanksystem, aber Sie sollten sicherstellen, dass Ihre Abfragen optimiert sind und bei Bedarf Caching und andere Maßnahmen zur Skalierung in Betracht ziehen.
+
+== Deployment:
+
+Stellen Sie sicher, dass Ihr Backend auf einer zuverlässigen Hosting-Infrastruktur gehostet ist, die für den Produktionsbetrieb geeignet ist.

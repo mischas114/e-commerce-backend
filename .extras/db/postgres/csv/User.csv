@@ -1,0 +1,3 @@
+id,name,email,password,permissions
+1,John Doe,john@example.com,hashedpassword,admin
+2,Jane Smith,jane@example.com,anotherhashedpassword,user

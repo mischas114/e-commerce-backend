@@ -1,0 +1,44 @@
+== Benutzer- und Authentifizierungsmanagement:
+
+* User: Eine Klasse zur Verwaltung von Benutzerinformationen wie Name, E-Mail, Passwort und Berechtigungen.
+* Authentication: Eine Klasse, die die Benutzeranmeldung und -authentifizierung verwaltet.
+
+== Produkt- und Katalogverwaltung:
+
+* Product: Eine Klasse zur Verwaltung von Produktinformationen wie Name, Beschreibung, Preis und Verfügbarkeit.
+* Category: Eine Klasse zur Gruppierung von Produkten in Kategorien.
+* Catalog: Eine Klasse zur Verwaltung von Produktkatalogen, die Produkte und Kategorien enthält.
+
+== Bestellverwaltung:
+
+* Order: Eine Klasse zur Verwaltung von Bestellinformationen wie Bestellpositionen, Gesamtpreis und Lieferadresse.
+* OrderItem: Eine Klasse zur Darstellung von Positionen in einer Bestellung.
+
+== Zahlungsabwicklung:
+
+* Payment: Eine Klasse zur Verwaltung von Zahlungsinformationen und Zahlungstransaktionen.
+Warenkorb:
+
+* Cart: Eine Klasse zur Verwaltung des Warenkorbs eines Benutzers.
+
+== Datenbankzugriff:
+
+* Database: Eine Klasse, die Datenbankverbindungen herstellt und SQL-Abfragen ausführt.
+Sicherheit:
+
+* Security: Eine Klasse zur Implementierung von Sicherheitsmaßnahmen wie Authentifizierung, Autorisierung und Schutz vor Angriffen.
+
+== API-Verwaltung:
+
+* API: Eine Klasse zur Bereitstellung von APIs für die Kommunikation mit dem Frontend und anderen Diensten.
+
+== Konfiguration und Einstellungen:
+
+* Configuration: Eine Klasse zur Verwaltung von Konfigurationseinstellungen, z. B. Datenbankverbindungsdaten und andere Parameter.
+
+== Logger und Protokollierung:
+
+* Logger: Eine Klasse zur Protokollierung von Aktivitäten und Fehlern in Ihrem Server.
+E-Mail-Versand:
+
+* Email: Eine Klasse zur Verwaltung des Versands von E-Mail-Benachrichtigungen an Benutzer, z. B. Bestellbestätigungen.
