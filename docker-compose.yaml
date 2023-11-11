@@ -1,0 +1,86 @@
+version: '3'
+
+services:
+  # ------------------------------------------------------------------------------------
+  # P o s t g r e S Q L
+  # ------------------------------------------------------------------------------------
+  postgres:
+    image: postgres:16.0-bullseye
+    ports:
+      - published: 5432
+        target: 5432
+    volumes:
+      - type: bind
+        source: C:/Zimmermann/volumes/postgres/data
+        target: /var/lib/postgresql/data
+      - type: bind
+        source: C:/Zimmermann/volumes/postgres/postgresql.conf
+        target: /etc/postgresql/postgresql.conf
+        read_only: true
+      - type: bind
+        source: C:/Zimmermann/volumes/postgres/tablespace
+        target: /var/lib/postgresql/tablespace
+      - type: bind
+        source: C:/Zimmermann/volumes/postgres/csv/buch
+        target: /csv
+        read_only: true
+      - type: bind
+        source: C:/Zimmermann/volumes/postgres/sql
+        target: /sql
+        read_only: true
+    environment:
+      POSTGRES_PASSWORD: p
+      TZ: Europe/Berlin
+      PGTZ: Europe/Berlin
+    user: "postgres:postgres"
+    security_opt:
+      - label:user:postgres
+      - no-new-privileges:true
+    container_name: postgres_2
+    hostname: postgres
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 2048M
+    healthcheck:
+      test:
+        [
+          CMD,
+          pg_isready,
+          --dbname,
+          postgres,
+          --username,
+          postgres
+        ]
+      interval: 5s
+      timeout: 2s
+      start_period: 5s
+
+  # ------------------------------------------------------------------------------------
+  # p g a d m i n
+  # ------------------------------------------------------------------------------------
+  # http://localhost:8888 mit Emailadresse "?" und Passwort "?" aus der .env
+  pgadmin:
+    image: dpage/pgadmin4
+    ports:
+      - published: 8888
+        target: 80
+    volumes:
+      - type: bind
+        source: C:/Zimmermann/volumes/postgres/pgadmin
+        target: /var/lib/pgadmin
+      - type: bind
+        source: C:/Zimmermann/volumes/postgres/pgadmin4
+        target: /var/lib/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin@acme.com
+      PGADMIN_DEFAULT_PASSWORD: p
+    user: "pgadmin:5050"
+    container_name: pgadmin_2
+    hostname: pgadmin
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 2048M
