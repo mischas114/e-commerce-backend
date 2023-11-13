@@ -1,3 +1,4 @@
-id,name,email,password,permissions
-1,John Doe,john@example.com,hashedpassword,admin
-2,Jane Smith,jane@example.com,anotherhashedpassword,user
+id,secondName, firstName,age,email,password,permissions
+940b2fa1-144f-4829-8f5f-c32b538721a8,John, Doe,22,john@example.com,148DE9C5A7A44D19E56CD9AE1A554BF67847AFB0C58F6E12FA29AC7DDFCA9940,admin
+2093a60d-7bdd-45cf-b653-c8bec4c87fea,Jane, Smith,19,jane@example.com,18E00563D36CBECECFC1F8DBAC64C02D669AED97E59ADE5568B1057566D7EA8B,standard
+4c9b052d-8718-43c7-ac77-8bee7b7438e3,Wick, Don,,wick@example.com,FF7BB1E1EEFE0BD8EA0EAFDC08007628B1EE7273B9412724D362EB09BE10898E,premium

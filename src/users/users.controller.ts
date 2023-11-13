@@ -1,54 +1,58 @@
 import {
 	Controller,
 	Get,
-	Body,
 	Post,
+	Body,
+	Patch,
 	Param,
-	Query,
+	Delete,
 	NotFoundException,
-	ParseIntPipe,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { User } from './entities/user.entity';
+import { UpdateUserDto } from './dto/update-user.dto';
 import {
-	ApiBadRequestResponse,
 	ApiCreatedResponse,
 	ApiNotFoundResponse,
 	ApiOkResponse,
 	ApiQuery,
 	ApiTags,
 } from '@nestjs/swagger';
-import { NotFoundError } from 'rxjs';
+import { User } from './entities/user.entity';
 
-@ApiTags('Users')
+@ApiTags('users')
 @Controller('users')
 export class UsersController {
-	constructor(private usersService: UsersService) {}
+	constructor(private readonly usersService: UsersService) {}
+
+	@ApiCreatedResponse({ type: User })
+	@ApiNotFoundResponse()
+	@Post()
+	async create(@Body() createUserDto: CreateUserDto) {
+		return this.usersService.create(createUserDto);
+	}
 
 	@ApiOkResponse({ type: User, isArray: true })
-	@ApiQuery({ name: 'name', required: false })
+	// @ApiQuery({name: name, required: false}) ||optional nach name suchen
 	@Get()
-	getUsers(@Query('name') name?: string): User[] {
-		return this.usersService.findAll(name);
+	async getUsers() {
+		return this.usersService.findAll();
 	}
 
 	@ApiOkResponse({ type: User })
 	@ApiNotFoundResponse()
 	@Get(':id')
-	getUserById(@Param('id', ParseIntPipe) id: number): User {
-		const user = this.usersService.findById(id);
-
-		if (!user) {
-			throw new NotFoundException();
-		}
-		return user;
+	async findOne(@Param('id') id: string) {
+		return this.usersService.findOne(id) ?? new NotFoundException();
 	}
 
-	@ApiCreatedResponse({ type: User })
-	@ApiBadRequestResponse()
-	@Post()
-	createUser(@Body() body: CreateUserDto): User {
-		return this.usersService.createUser(body);
+	@Patch(':id')
+	async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+		return this.usersService.update(id, updateUserDto) ?? new NotFoundException();
+	}
+
+	@Delete(':id')
+	async remove(@Param('id') id: string) {
+		return this.usersService.remove(id) ?? new NotFoundException();
 	}
 }
