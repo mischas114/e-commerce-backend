@@ -13,6 +13,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import {
 	ApiCreatedResponse,
+	ApiNoContentResponse,
 	ApiNotFoundResponse,
 	ApiOkResponse,
 	ApiQuery,
@@ -46,11 +47,13 @@ export class UsersController {
 		return this.usersService.findOne(id) ?? new NotFoundException();
 	}
 
+	@ApiNoContentResponse()
 	@Patch(':id')
 	async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
 		return this.usersService.update(id, updateUserDto) ?? new NotFoundException();
 	}
 
+	@ApiNoContentResponse()
 	@Delete(':id')
 	async remove(@Param('id') id: string) {
 		return this.usersService.remove(id) ?? new NotFoundException();

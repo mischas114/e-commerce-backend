@@ -11,34 +11,36 @@ package "Benutzer- und Authentifizierungsmanagement" {
     +updateUserInfo(): void
   }
   class Authentication {
-    +login(username: string, password: string): boolean
+    +login(email: string, password: string): boolean
     +logout(): void
   }
 }
 
+
+
 package "Produkt- und Katalogverwaltung" {
-  class Product {
+  class Item {
     -id: int
     -name: string
     -description: string
     -price: float
     -availability: boolean
-    +getProductInfo(): string
-    +updateProductInfo(): void
+    +getItemInfo(): string
+    +updateItemInfo(): void
   }
   class Category {
     -id: int
     -name: string
-    -products: Product[]
+    -items: Item[]
     +getCategoryInfo(): string
-    +addProduct(): void
+    +addItem(): void
   }
   class Catalog {
     -id: int
-    -products: Product[]
+    -items: Item[]
     -categories: Category[]
     +getCatalogInfo(): string
-    +addProduct(): void
+    +addItem(): void
     +addCategory(): void
   }
 }
@@ -55,7 +57,7 @@ package "Bestellverwaltung" {
   }
   class OrderItem {
     -id: int
-    -product: Product
+    -items: Item[]
     -quantity: int
     +getOrderItemInfo(): string
   }
@@ -69,7 +71,7 @@ package "Zahlungsabwicklung" {
     +processPayment(): void
   }
   class Cart {
-    -items: Product[]
+    -items: Item[]
     +addItemToCart(): void
     +removeItemFromCart(): void
     +checkout(): void
@@ -126,10 +128,10 @@ package "E-Mail-Versand" {
 }
 
 User --|> Authentication
-Product -- Category
-Product -- Catalog
+Item -- Category
+Item -- Catalog
 Order --|> OrderItem
-Cart --|> Product
+Cart --|> Item
 Security --|> Authentication
 Database -- Security
 API --|> Authentication
