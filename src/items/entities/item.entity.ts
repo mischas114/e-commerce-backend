@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
+@Entity()
 export class Item {
 	@ApiProperty()
 	@Column('varchar')
@@ -16,7 +17,7 @@ export class Item {
 	description: string;
 
 	@ApiProperty()
-	@Column('varchar')
+	@Column('decimal')
 	price: number;
 
 	@ApiProperty()

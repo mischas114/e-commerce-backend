@@ -9,8 +9,8 @@ async function bootstrap() {
 	app.useGlobalPipes(new ValidationPipe());
 
 	const config = new DocumentBuilder()
-		.setTitle('Nest API')
-		.setDescription('the description of the API')
+		.setTitle('Backend e-commerce')
+		.setDescription('als Beispiel eine Supplement Online Store')
 		.setVersion('1.0')
 		.build();
 
