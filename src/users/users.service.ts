@@ -1,9 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { EntityManager, Repository, Like } from 'typeorm';
+import { EntityManager, Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { EmailExistsException } from './exceptions/email-exists-exception';
+import { EmailNotExistsException } from './exceptions/email-not-exists-exception';
 
 @Injectable()
 export class UsersService {
@@ -15,6 +17,14 @@ export class UsersService {
 
 	async create(createUserDto: CreateUserDto) {
 		const createdUser: CreateUserDto = this.entityManager.create(User, createUserDto);
+
+		const existingUser: User = await this.usersRepository.findOneBy({
+			email: createdUser.email,
+		});
+		if (existingUser) {
+			throw new EmailExistsException(createdUser.email);
+		}
+
 		await this.entityManager.save(User, createdUser);
 	}
 
@@ -32,12 +42,21 @@ export class UsersService {
 		return users;
 	}
 
-	async findOne(id: string) {
+	async findOneId(id: string) {
 		return this.usersRepository.findOneBy({ id });
 	}
 
+	async findOneEmail(email: string) {
+		const user = await this.usersRepository.findOneBy({ email });
+		if (!user) {
+			throw new EmailNotExistsException(user.email);
+		}
+
+		return this.usersRepository.findOneBy({ email });
+	}
+
 	async update(id: string, updateUserDto: UpdateUserDto): Promise<void> {
-		const updatedUser = await this.usersRepository.findOneBy({ id });
+		const updatedUser: User = await this.usersRepository.findOneBy({ id });
 
 		if (!updatedUser) {
 			throw new NotFoundException();
@@ -45,17 +64,17 @@ export class UsersService {
 
 		// Update user properties with data from the DTO
 		Object.assign(updatedUser, updateUserDto);
-
 		await this.entityManager.save(User, updatedUser);
 	}
 
-	async remove(id: string): Promise<void> {
-		const deletedUser = await this.usersRepository.findOneBy({ id });
+	async remove(id: string): Promise<boolean> {
+		const deletedUser: User = await this.usersRepository.findOneBy({ id });
 
 		if (!deletedUser) {
-			throw new NotFoundException();
+			throw new NotFoundException(`User with ID ${id} was not found`);
 		}
 
 		await this.entityManager.remove(deletedUser);
+		return true;
 	}
 }

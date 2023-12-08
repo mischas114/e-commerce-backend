@@ -2,13 +2,12 @@ import { ApiProperty } from '@nestjs/swagger';
 import {
 	IsAlphanumeric,
 	IsEmail,
-	IsEnum,
 	IsHash,
 	IsIn,
 	IsNumber,
+	IsOptional,
 	IsPositive,
 	MaxLength,
-	MinLength,
 } from 'class-validator';
 
 export class CreateUserDto {
@@ -30,6 +29,7 @@ export class CreateUserDto {
 	})
 	secondName: string;
 
+	@IsOptional()
 	@IsNumber()
 	@IsPositive()
 	@ApiProperty({
@@ -41,6 +41,7 @@ export class CreateUserDto {
 	age?: number;
 
 	@IsEmail()
+	@MaxLength(50)
 	@ApiProperty({
 		example: 'john.doe@example.com',
 		description: 'Email address of the user',

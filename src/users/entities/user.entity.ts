@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
 @Entity()
 export class User {
 	@ApiProperty()
@@ -20,7 +20,7 @@ export class User {
 	age?: number;
 
 	@ApiProperty()
-	@Column('varchar')
+	@Column('varchar', { unique: true })
 	email: string;
 
 	@ApiProperty()

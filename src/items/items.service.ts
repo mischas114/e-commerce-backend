@@ -10,6 +10,7 @@ export class ItemsService {
 	constructor(
 		@InjectRepository(Item)
 		private readonly itemsRepository: Repository<Item>,
+		//toDO EntityManager löschen?
 		private readonly entityManager: EntityManager,
 	) {}
 
