@@ -8,6 +8,7 @@ import {
 	Delete,
 	NotFoundException,
 	Query,
+	UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -21,6 +22,9 @@ import {
 	ApiTags,
 } from '@nestjs/swagger';
 import { User } from './entities/user.entity';
+import { AuthenticatedGuard } from 'src/auth/guards/authenticated.guard';
+
+export interface UserWithoutPassword extends Omit<User, 'password'> {}
 
 @ApiTags('users')
 @Controller('users')
@@ -29,6 +33,7 @@ export class UsersController {
 
 	@ApiCreatedResponse({ type: User })
 	@ApiNotFoundResponse()
+	// @UseGuards(AuthenticatedGuard)
 	@Post()
 	async create(@Body() createUserDto: CreateUserDto): Promise<void> {
 		return this.usersService.create(createUserDto);
@@ -37,7 +42,7 @@ export class UsersController {
 	@ApiOkResponse({ type: User, isArray: true })
 	@ApiQuery({ name: 'name', required: false, isArray: true })
 	@Get()
-	async getUsers(@Query('name') name?: string): Promise<User[]> {
+	async getUsers(@Query('name') name?: string): Promise<UserWithoutPassword[]> {
 		if (name) {
 			return this.usersService.findByName(name);
 		}
@@ -46,9 +51,10 @@ export class UsersController {
 
 	@ApiOkResponse({ type: User })
 	@ApiNotFoundResponse()
+	@UseGuards(AuthenticatedGuard)
 	@Get('id/:id')
-	async findOneId(@Param('id') id: string): Promise<User> {
-		const user = await this.usersService.findOneId(id);
+	async findOneById(@Param('id') id: string): Promise<User> {
+		const user = await this.usersService.findOneById(id);
 		if (!user) {
 			throw new NotFoundException('User not found');
 		}
@@ -58,40 +64,33 @@ export class UsersController {
 	@ApiOkResponse({ type: User })
 	@ApiNotFoundResponse()
 	@Get('email/:email')
-	async findOneEmail(@Param('email') email: string): Promise<User> {
-		const user = await this.usersService.findOneEmail(email);
+	async findOneByEmail(@Param('email') email: string): Promise<User> {
+		const user = await this.usersService.findOneByEmail(email);
 		if (!user) {
 			throw new NotFoundException('User not found');
 		}
 		return user;
 	}
 
-	@ApiNoContentResponse({ description: 'User with {id} updated successfully' })
-	@ApiNotFoundResponse({ description: 'User with {id} was not found' })
-	@Patch(':id')
+	@ApiNoContentResponse({ description: 'User with {email} updated successfully' })
+	@ApiNotFoundResponse({ description: 'User with {email} was not found' })
+	// @UseGuards(AuthenticatedGuard)
+	@Patch(':email')
 	async update(
-		@Param('id') id: string,
+		@Param('email') email: string,
 		@Body() updateUserDto: UpdateUserDto,
 	): Promise<void> {
-		const updatedUser = await this.usersService.update(id, updateUserDto);
-		if (updatedUser === undefined) {
-			throw new NotFoundException(`User with ID ${id} was not found`);
-		}
+		await this.usersService.update(email, updateUserDto);
 	}
 
-	//toDO Fehlerrückgabe inkonsistent mit anderen Methoden
-
-	@ApiNoContentResponse({ description: 'User  with {id} deleted successfully' })
+	@ApiOkResponse({ description: 'User  with {id} deleted successfully' })
 	@ApiNotFoundResponse({ description: 'User with {id} was not found' })
+	// @UseGuards(AuthenticatedGuard)
 	@Delete(':id')
 	async remove(@Param('id') id: string): Promise<void> {
-		try {
-			await this.usersService.remove(id);
-		} catch (error) {
-			if (error instanceof NotFoundException) {
-				throw new NotFoundException(error.message);
-			}
-			throw error;
+		const deletedUser = await this.usersService.remove(id);
+		if (!deletedUser) {
+			throw new NotFoundException(`User with ID ${id} was not found`);
 		}
 	}
 }

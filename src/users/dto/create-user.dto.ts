@@ -2,7 +2,6 @@ import { ApiProperty } from '@nestjs/swagger';
 import {
 	IsAlphanumeric,
 	IsEmail,
-	IsHash,
 	IsIn,
 	IsNumber,
 	IsOptional,
@@ -49,10 +48,9 @@ export class CreateUserDto {
 	})
 	email: string;
 
-	@IsHash('sha256')
 	@ApiProperty({
-		example: 'B2867617492E26C338AB49F72AFABC984D798B59755A27E312B953716AE964D7',
-		description: 'SHA-256 hashed password',
+		example: 'SecurePassword123!',
+		description: 'a very secure password',
 		type: String,
 	})
 	password: string;
@@ -62,7 +60,7 @@ export class CreateUserDto {
 	@MaxLength(20)
 	@ApiProperty({
 		example: 'Premium',
-		description: 'User+ permissions ; others: Standard, Admin',
+		description: 'Premium | Standard | Admin',
 		type: String,
 	})
 	permissions: string;

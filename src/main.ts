@@ -10,7 +10,7 @@ async function bootstrap() {
 
 	const config = new DocumentBuilder()
 		.setTitle('Backend e-commerce')
-		.setDescription('als Beispiel eine Supplement Online Store')
+		.setDescription('Supplement Online Store - Beispielprojekt')
 		.setVersion('1.0')
 		.build();
 
