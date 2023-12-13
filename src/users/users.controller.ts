@@ -22,8 +22,7 @@ import {
 	ApiTags,
 } from '@nestjs/swagger';
 import { User } from './entities/user.entity';
-import { AuthenticatedGuard } from 'src/auth/guards/authenticated.guard';
-
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 export interface UserWithoutPassword extends Omit<User, 'password'> {}
 
 @ApiTags('users')
@@ -33,7 +32,6 @@ export class UsersController {
 
 	@ApiCreatedResponse({ type: User })
 	@ApiNotFoundResponse()
-	// @UseGuards(AuthenticatedGuard)
 	@Post()
 	async create(@Body() createUserDto: CreateUserDto): Promise<void> {
 		return this.usersService.create(createUserDto);
@@ -51,7 +49,7 @@ export class UsersController {
 
 	@ApiOkResponse({ type: User })
 	@ApiNotFoundResponse()
-	@UseGuards(AuthenticatedGuard)
+	@UseGuards(JwtAuthGuard)
 	@Get('id/:id')
 	async findOneById(@Param('id') id: string): Promise<User> {
 		const user = await this.usersService.findOneById(id);
@@ -74,7 +72,6 @@ export class UsersController {
 
 	@ApiNoContentResponse({ description: 'User with {email} updated successfully' })
 	@ApiNotFoundResponse({ description: 'User with {email} was not found' })
-	// @UseGuards(AuthenticatedGuard)
 	@Patch(':email')
 	async update(
 		@Param('email') email: string,
@@ -85,7 +82,6 @@ export class UsersController {
 
 	@ApiOkResponse({ description: 'User  with {id} deleted successfully' })
 	@ApiNotFoundResponse({ description: 'User with {id} was not found' })
-	// @UseGuards(AuthenticatedGuard)
 	@Delete(':id')
 	async remove(@Param('id') id: string): Promise<void> {
 		const deletedUser = await this.usersService.remove(id);

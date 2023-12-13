@@ -14,8 +14,9 @@ import {
 @ApiBearerAuth()
 @Controller('auth')
 export class AuthController {
-	private readonly logger = new Logger(AuthController.name);
 	constructor(private readonly authService: AuthService) {}
+
+	private readonly logger = new Logger(AuthController.name);
 
 	@ApiOperation({ summary: 'Login' })
 	@ApiCreatedResponse({ description: 'User logged in' })
@@ -40,7 +41,7 @@ export class AuthController {
 	})
 	async login(@Request() req) {
 		this.logger.log(`Login request for email: ${req.body.email}`);
-		return { msg: 'Login successful' }; //toDo: return jwt
+		return this.authService.login(req.user);
 	}
 
 	//other Requests with spezific Roles

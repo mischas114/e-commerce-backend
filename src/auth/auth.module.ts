@@ -5,8 +5,10 @@ import { LocalStrategy } from './strategies/local.strategy';
 import { UsersModule } from 'src/users/users.module';
 import { AuthController } from './controllers/auth.controller';
 import { JwtModule } from '@nestjs/jwt';
+import * as dotenv from 'dotenv';
+import { JwtStrategy } from './strategies/jwt.strategy';
 
-const { JWT_SECRET } = process.env;
+const { JWT_SECRET } = dotenv.config().parsed;
 
 @Module({
 	imports: [
@@ -18,6 +20,7 @@ const { JWT_SECRET } = process.env;
 		}),
 	],
 	controllers: [AuthController],
-	providers: [AuthService, LocalStrategy],
+	providers: [AuthService, LocalStrategy, JwtStrategy],
+	exports: [AuthService],
 })
 export class AuthModule {}
